@@ -22,7 +22,7 @@ typedef struct lists_s
 list_t *createList(char *, list_t *head);
 list_t *pushtNodes(list_t *head, int val);
 list_t *newNode();
-void movebetweennodes(char *command);
+void insertNode(list_t **head, list_t *newnode);
 void freeList(list_t *head);
 void displayResult(list_t *head);
 
@@ -44,7 +44,7 @@ list_t *createList(char *File_in_Name, list_t *head)
     fin = fopen(File_in_Name, "r");
 }
 
-//first our nodes starts as if its surroundings are empty too
+// first our nodes starts as if its surroundings are empty too
 list_t *pushNodes(list_t *head, int val)
 {
     list_t *newPointer;
@@ -53,6 +53,13 @@ list_t *pushNodes(list_t *head, int val)
 
     newPointer->right = NULL;
     newPointer->left = NULL;
+
+    return newPointer;
+}
+
+void insertNode(list_t **head, list_t *newnode)
+{
+    
 }
 list_t *newNode()
 {
