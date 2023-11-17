@@ -21,7 +21,7 @@ typedef struct lists_s
 /*prototype for the list*/
 list_t *createList(char *, list_t *head);
 list_t *pushtNodes(list_t *head, int val);
-list_t *newNode();
+list_t *createNode();
 void insertNode(list_t **head, list_t *newnode);
 void freeList(list_t *head);
 void displayResult(list_t *head);
@@ -44,24 +44,21 @@ list_t *createList(char *File_in_Name, list_t *head)
     fin = fopen(File_in_Name, "r");
 }
 
-// first our nodes starts as if its surroundings are empty too
-list_t *pushNodes(list_t *head, int val)
+void insertNode(list_t **head, list_t *newNode)
 {
-    list_t *newPointer;
+    list_t *last, *next;
 
-    newPointer = new_element();
+    if (*head == NULL)
+    {
+        *head = newNode;
+        newNode->right = NULL;
+        newNode->left = NULL;
+        return;
+    }
 
-    newPointer->right = NULL;
-    newPointer->left = NULL;
-
-    return newPointer;
 }
 
-void insertNode(list_t **head, list_t *newnode)
-{
-    
-}
-list_t *newNode()
+list_t *createNode()
 {
 
     list_t *node_ptr;
