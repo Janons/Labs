@@ -40,22 +40,37 @@ int main(int argc, char *argv[])
 list_t *createList(char *File_in_Name, list_t *head)
 {
     FILE *fin;
+    list_t *new;
 
     fin = fopen(File_in_Name, "r");
-}
 
-void insertNode(list_t **head, list_t *newNode)
-{
-    list_t *last, *next;
-
-    if (*head == NULL)
+    if (fin == NULL)
     {
-        *head = newNode;
-        newNode->right = NULL;
-        newNode->left = NULL;
-        return;
+        perror("Error in parsing the file");
     }
 
+    do
+    {
+        new = createNode();
+
+    } while (1);
+}
+
+// ask this to Mo and the lab teachers
+
+void pushNode(list_t *head, list_t *newNode)
+{
+
+    if (head == NULL)
+    {
+        newNode->left = NULL;
+        newNode->right = NULL;
+    }
+
+    newNode->right = head->right;
+    newNode->left = NULL;
+
+    return (head);
 }
 
 list_t *createNode()
