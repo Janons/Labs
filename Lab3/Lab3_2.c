@@ -20,11 +20,8 @@ typedef struct lists_s
 
 /*prototype for the list*/
 list_t *createList(char *, list_t *head);
-list_t *pushtNodes(list_t *head, int val);
+list_t *pushNode(list_t *head, list_t *newNode);
 list_t *createNode();
-void insertNode(list_t **head, list_t *newnode);
-void freeList(list_t *head);
-void displayResult(list_t *head);
 
 /*main function*/
 
@@ -32,7 +29,26 @@ int main(int argc, char *argv[])
 {
     list_t *head = NULL;
 
+    // Memory allocation for the head
+
     head = createList(argv[1], head);
+
+    list_t *temp = head;
+
+    while (temp != NULL)
+    {
+        printf("%s->", temp->name);
+        temp = temp->right;
+    }
+
+    // Free allocated memory
+    temp = head;
+    while (temp != NULL)
+    {
+        list_t *next = temp->right;
+        free(temp);
+        temp = next;
+    }
 
     return 0;
 }
@@ -42,23 +58,34 @@ list_t *createList(char *File_in_Name, list_t *head)
     FILE *fin;
     list_t *new;
 
+    char name[MAXCHAR];
+    char personalIdentification[16];
+    char arrayofDate[8];
+    int salaries;
+
     fin = fopen(File_in_Name, "r");
 
     if (fin == NULL)
     {
         perror("Error in parsing the file");
+        return NULL;
     }
 
-    do
+    while (fscanf(fin, "%s %s %s %i", name, personalIdentification, arrayofDate, &salaries) != EOF)
     {
         new = createNode();
+        strcpy(*new->name, name);
+        strcpy(*new->personalIdentification, personalIdentification);
+        strcpy(*new->arrayofDates, arrayofDate);
+        new->salaries = salaries;
 
-    } while (1);
+        head = pushNode(head, new);
+    }
+    fclose(fin);
+    return head;
 }
 
-// ask this to Mo and the lab teachers
-
-void pushNode(list_t *head, list_t *newNode)
+list_t *pushNode(list_t *head, list_t *newNode)
 {
 
     if (head == NULL)
@@ -70,7 +97,8 @@ void pushNode(list_t *head, list_t *newNode)
     newNode->right = head->right;
     newNode->left = NULL;
 
-    return (head);
+
+    return head;
 }
 
 list_t *createNode()
