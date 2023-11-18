@@ -5,63 +5,51 @@
 
 /*define the variable*/
 #define MAXCHAR 50
+#define MAXARRAY 8
+#define IDENTIFICATION 16
 
 /*struct for the list*/
-typedef struct lists_s
+typedef struct Node_t_movement
 {
-    char *name[MAXCHAR];
-    char *personalIdentification[16];
-    char *arrayofDates[8];
-    int salaries;
+    char *name;
+    char personalidentification[IDENTIFICATION];
+    char arrayofdates[MAXARRAY];
+    int salary;
+    struct Node_Movement *next;
+    struct Node_Movement *prev;
 
-    struct list_s *left, *right;
-
-} list_t;
+} Node_t;
 
 /*prototype for the list*/
-list_t *createList(char *, list_t *head);
-list_t *pushNode(list_t *head, list_t *newNode);
-list_t *createNode();
+Node_t *createNode(char name, char identification, char arrayofdate, int salary);
+Node_t *createList(char *File_in_Name, Node_t *head);
+void *InsertNodeAtHead(Node_t *head, Node_t *newNode);
 
 /*main function*/
 
 int main(int argc, char *argv[])
 {
-    list_t *head = NULL;
+    Node_t *head = NULL;
 
     // Memory allocation for the head
 
     head = createList(argv[1], head);
 
-    list_t *temp = head;
-
-    while (temp != NULL)
-    {
-        printf("%s->", temp->name);
-        temp = temp->right;
-    }
-
-    // Free allocated memory
-    temp = head;
-    while (temp != NULL)
-    {
-        list_t *next = temp->right;
-        free(temp);
-        temp = next;
-    }
+    Node_t *temp = head;
 
     return 0;
 }
-/*creating the list and connecting the nodes with each other*/
-list_t *createList(char *File_in_Name, list_t *head)
+/*creating the list and connecting the Node_ts with each other*/
+Node_t *createList(char *File_in_Name, Node_t *head)
 {
     FILE *fin;
-    list_t *new;
+    Node_t *new;
 
     char name[MAXCHAR];
-    char personalIdentification[16];
-    char arrayofDate[8];
+    char personalIdentification[IDENTIFICATION];
+    char arrayofDate[MAXARRAY];
     int salaries;
+    int i=0;
 
     fin = fopen(File_in_Name, "r");
 
@@ -71,45 +59,30 @@ list_t *createList(char *File_in_Name, list_t *head)
         return NULL;
     }
 
-    while (fscanf(fin, "%s %s %s %i", name, personalIdentification, arrayofDate, &salaries) != EOF)
+    while (fscanf(fin, "%s %s %s %d", name, personalIdentification, arrayofDate, &salaries))
     {
-        new = createNode();
-        strcpy(*new->name, name);
-        strcpy(*new->personalIdentification, personalIdentification);
-        strcpy(*new->arrayofDates, arrayofDate);
-        new->salaries = salaries;
-
-        head = pushNode(head, new);
+        i++;
     }
-    fclose(fin);
-    return head;
 }
 
-list_t *pushNode(list_t *head, list_t *newNode)
+Node_t *createNode(char name, char identification, char arrayofdate, int salary)
 {
 
-    if (head == NULL)
-    {
-        newNode->left = NULL;
-        newNode->right = NULL;
-    }
-
-    newNode->right = head->right;
-    newNode->left = NULL;
-
-
-    return head;
-}
-
-list_t *createNode()
-{
-
-    list_t *node_ptr;
-    node_ptr = (list_t *)malloc(sizeof(list_t));
-    if (node_ptr == NULL)
+    Node_t *Node_t_ptr;
+    Node_t_ptr = (Node_t *)malloc(sizeof(Node_t));
+    if (Node_t_ptr == NULL)
     {
         fprintf(stderr, "Memory allocation error.\n");
         exit(-1);
     }
-    return (node_ptr);
+
+    strcpy(*Node_t_ptr, name);
+    strcpy(*Node_t_ptr, identification);
+    strcpy(*Node_t_ptr, arrayofdate);
+    Node_t_ptr->salary = salary;
+
+    Node_t_ptr->prev = NULL;
+    Node_t_ptr->next = NULL;
+
+    return (Node_t_ptr);
 }
