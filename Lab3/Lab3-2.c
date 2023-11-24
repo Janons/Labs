@@ -3,9 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAXCHAR 50
+#define MAX_R 255 + 1
 #define MAXARRAY 8
 #define IDENTIFICATION 16 + 1
+#define MAX 21
 
 typedef struct Node_t_movement
 {
@@ -41,10 +42,7 @@ Node_t *createList(char *File_in_Name, Node_t *head)
     FILE *fin;
     Node_t *tmpPnt;
 
-    char name[MAXCHAR];
-    char personalIdentification[IDENTIFICATION];
-    char arrayofDate[MAXARRAY];
-    int salaries;
+    char line[MAX_R], name[MAX];
 
     fin = fopen(File_in_Name, "r");
     if (fin == NULL)
@@ -53,21 +51,18 @@ Node_t *createList(char *File_in_Name, Node_t *head)
         return NULL;
     }
 
-    while (fscanf(fin, "%s %s %s %d", name, personalIdentification, arrayofDate, &salaries) != EOF)
+    while (fgets(line, MAX_R, fin) != NULL)
     {
-
-        Node_t *Node_t_ptr = (Node_t *)malloc(sizeof(Node_t));
-        if (Node_t_ptr == NULL)
+        tmpPnt = (Node_t *)malloc(sizeof(Node_t));
+        if (tmpPnt == NULL)
         {
-            fprintf(stderr, "Memory allocation error.\n");
+            printf("Allocation Error.\n");
             exit(EXIT_FAILURE);
         }
-        Node_t_ptr->name = strdup(name);
-        strcpy(Node_t_ptr->personalidentification, personalIdentification);
-        strcpy(Node_t_ptr->arrayofdates, arrayofDate);
-        Node_t_ptr->salary = salaries;
-
-        head = InsertNodeAtHead(head, Node_t_ptr);
+        sscanf(line, "%s %s %s %d",
+               name, tmpPnt->personalidentification, tmpPnt->arrayofdates, &tmpPnt->salary);
+        tmpPnt->name = strdup(name);
+        head = InsertNodeAtHead(head, tmpPnt);
     }
 
     fclose(fin);
