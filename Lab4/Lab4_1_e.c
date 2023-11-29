@@ -16,5 +16,5 @@ int isPalindrome(char *s, int l)
         return 0;
 
     else
-        return ((*s + 1 == *s - 1) ? 1 : 0)
+        return ((*s + 1 == *s - 1) ? 1 : 0);
 }
