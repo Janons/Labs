@@ -1,26 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 int countSpaces(char *s);
 
-int main(int argc)
+int main()
 
 {
-
-    int count = 0;
+    int n;
     char str[] = "This is a string with spaces!";
 
-    count = countSpaces(str);
+    n = countSpaces(str);
 
-    printf("%d", &count);
+    fprintf(stdout, "The Number of empty Spaces -> %d\n", n);
 }
 
 int countSpaces(char *s)
 {
-    int count;
 
-    if (*s != NULL)
-        return count;
+    if (*s == '\0')
+        return 0;
 
-    
+    else
+        return ((isspace(*s) ? 1 : 0) + countSpaces(s+1));
 }
