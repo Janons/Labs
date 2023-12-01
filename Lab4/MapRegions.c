@@ -11,28 +11,59 @@ void map_write(char *, int[DIM][DIM], int, int, int);
 int main(int argc, char *argv[])
 {
 
-    char mat[DIM][DIM];
-    int nr, nc, i, j;
+    char map[DIM][DIM];
+    char line[DIM];
+    int nr, nc, i, j, n = 0;
 
-    map_read(argv[1], mat, nr, nc);
+    if (argc < 2)
+    {
+        return (EXIT_FAILURE);
+    }
+
+    map_read(argv[1], map, &nr, &nc);
+
     for (i = 0; i < nr; i++)
     {
         for (j = 0; j < nc; j++)
         {
-            if (mat[i][j] == -1)
-            {
-                expand_r(); // dropping the water drop
-            }
+            fprintf(stdout, "%d", map[i][j]);
         }
     }
+
+    return 0;
+
 }
 
 void map_read(char *name, int map[DIM][DIM], int *nr, int *nc)
 {
     /*the variables*/
+    FILE *fin;
+    char line[DIM+2];
+    int i, j;
 
-    /*open the file*/
+    /*opening the file*/
+    fin = fopen(name, "r");
+    if (fin == NULL)
+        perror("ERRRRRORRRR");
 
     /*Change the numbers of the map values*/
-    while()
+    i = 0;
+    while (fgets(line, DIM+2, fin) != NULL)
+    {
+        j = 0;
+        while (j < DIM && (line[j] == '.' || line[j] == '*'))
+        {
+            map[i][j] = ((line[j] == '.') ? -1 : 0);
+            j++;
+        }
+    }
+    *nr = i;
+    *nc = j;
+
+    fclose(fin);
 }
+
+
+/*questions to ask
+1)Would using memory allocation here be logical?
+2)Why do we add 2?*/
