@@ -2,24 +2,33 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void matrixPerm(int *val, int *sol, int *mark,
-                int n, int count, int pos);
+void matrixPerm(int **matrix, int *val, int *sol, int *mark,
+                int n, int count, int pos, int magicnumber);
 bool checkMagicSquare(int **matrix, int n, int magicNumber);
 void writeMagicSquare();
+void freeThematrix();
 
 int main(int argc, char *argv[])
 {
     int magicNumber;
     int **matrix;
-    
+
     if (argc < 3)
     {
         return EXIT_SUCCESS;
     }
     int n = (int)argv[2];
-    magicNumber = n*((n * n) + 1)/ 2;
+    magicNumber = n * ((n * n) + 1) / 2;
 
-    /*creating the default matrix with zeroes*/
+    /*dynamic memory allocation for the matrix*/
+    **matrix = (int **)malloc(n * sizeof(int *));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            matrix[i][j] = 0;
+        }
+    }
 
     return 0;
 }
@@ -73,8 +82,8 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
     return false;
 }
 
-void matrixPerm(int *val, int *sol, int *mark,
-                int n, int count, int pos)
+void matrixPerm(int **matrix, int *val, int *sol, int *mark,
+                int n, int count, int pos, int magicnumber)
 {
     int i;
 
@@ -82,5 +91,10 @@ void matrixPerm(int *val, int *sol, int *mark,
     sol = (int *)malloc(n * sizeof(int));
     mark = (int *)calloc(n, sizeof(int));
 
-    if ()
+    if (checkMagicSquare(matrix, n, magicnumber))
+        return;
 }
+
+/*To-Do
+1) Write the same code with calloc
+2)Write the same code with lesser lines*/
