@@ -5,7 +5,7 @@
 #define DIM 20
 
 void map_read(char *, int[DIM][DIM], int *, int *);
-void expand_r(int[DIM][DIM], int, int, int);
+void expand_r(int map[DIM][DIM], int nr, int nc, int numberofIterations);
 void map_write(char *, int[DIM][DIM], int, int, int);
 
 int main(int argc, char *argv[])
@@ -62,20 +62,29 @@ void map_read(char *name, int map[DIM][DIM], int *nr, int *nc)
     fclose(fin);
 }
 
-void expand_r(int map, int, int nr, int nc)
+void expand_r(int map[DIM][DIM], int nr, int nc, int regionnumber)
 {
-    /*the offsets*/
+    /*the offsets + variables*/
+    int i, xx, yy;
+    int xoffset[] = {1, 0, -1, 0};
+    int yoffset[] = {0, 1, 0, -1};
 
+    /*base case*/
+    if (isalpha(map[nr][nc]) || map[nr][nc] != -1)
+        return;
 
+    /*numbering the regions*/
+    if (map[nr][nc] == -1)
+    {
+        map[nr][nc] = regionnumber;
+    }
 
-    /*detect -1*/
+    for (i = 0; i < sizeof(xoffset); i++)
+    {
+        xx = xoffset[i] + nr;
+        yy = yoffset[i] + nc;
 
-
-
-*/
-
+        expand_r(map[nr][nc], xoffset, yoffset, regionnumber);
+    }
 }
 
-/*questions to ask
-1)Would using memory allocation here be logical?
-2)Why do we add 2?*/
