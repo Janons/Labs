@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-void perm(int *val, int *sol, int *mark,
-         int n, int count, int pos);
-int checkMagicSquare();
+void matrixPerm(int *val, int *sol, int *mark,
+                int n, int count, int pos);
+bool checkMagicSquare(int **matrix, int n, int magicNumber);
 void writeMagicSquare();
 
 int main()
@@ -11,8 +12,57 @@ int main()
     return 0;
 }
 
-void perm(int *val, int *sol, int *mark,
-         int n, int count, int pos)
+// checking for the square matrix
+bool checkMagicSquare(int **matrix, int n, int magicNumber)
+{
+    int i, j;
+    int flag1, flag2, flag3, count = 0;
+
+    // check rows
+    for (i = 0; i < n; i++)
+    {
+        flag1 = 0;
+        count = 0;
+
+        for (j = 0; j < n; j++)
+        {
+            count += matrix[i][j];
+
+            if (count == magicNumber)
+                flag1 = 1;
+        }
+        flag2 = 0;
+        count = 0;
+        for (j = 0; j < n; j++)
+        {
+            count += matrix[j][i];
+            if (count == magicNumber)
+            {
+                flag2 = 1;
+            }
+        }
+        //Check Diagonal
+        flag3 = 0;
+        count = 0;
+        for (j = 0; j < n; j++)
+        {
+            if (j == i)
+            {
+                count += matrix[i][j];
+            }
+        }
+    }
+
+    if (flag1 && flag2 && flag3)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void matrixPerm(int *val, int *sol, int *mark,
+                int n, int count, int pos)
 {
     int i;
 
@@ -20,16 +70,5 @@ void perm(int *val, int *sol, int *mark,
     sol = (int *)malloc(n * sizeof(int));
     mark = (int *)calloc(n, sizeof(int));
 
-    if (pos >= n)
-    {
-        return count + 1;
-    }
-
-    for (i = 0; i < n; i++)
-    {
-        if (mark[i] == 0)
-        {
-            mark[i]= 1 //the value is chosen
-        }
-    }
+    if ()
 }
