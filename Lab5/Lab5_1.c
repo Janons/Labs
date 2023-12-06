@@ -7,8 +7,20 @@ void matrixPerm(int *val, int *sol, int *mark,
 bool checkMagicSquare(int **matrix, int n, int magicNumber);
 void writeMagicSquare();
 
-int main()
+int main(int argc, char *argv[])
 {
+    int magicNumber;
+    int **matrix;
+    
+    if (argc < 3)
+    {
+        return EXIT_SUCCESS;
+    }
+    int n = (int)argv[2];
+    magicNumber = n*((n * n) + 1)/ 2;
+
+    /*creating the default matrix with zeroes*/
+
     return 0;
 }
 
@@ -41,7 +53,7 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
                 flag2 = 1;
             }
         }
-        //Check Diagonal
+        // Check Diagonal
         flag3 = 0;
         count = 0;
         for (j = 0; j < n; j++)
