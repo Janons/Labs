@@ -31,14 +31,13 @@ int main(int argc, char *argv[])
     }
 
     return 0;
-
 }
 
 void map_read(char *name, int map[DIM][DIM], int *nr, int *nc)
 {
     /*the variables*/
     FILE *fin;
-    char line[DIM+2];
+    char line[DIM + 2];
     int i, j;
 
     /*opening the file*/
@@ -48,7 +47,7 @@ void map_read(char *name, int map[DIM][DIM], int *nr, int *nc)
 
     /*Change the numbers of the map values*/
     i = 0;
-    while (fgets(line, DIM+2, fin) != NULL)
+    while (fgets(line, DIM + 2, fin) != NULL)
     {
         j = 0;
         while (j < DIM && (line[j] == '.' || line[j] == '*'))
@@ -63,6 +62,19 @@ void map_read(char *name, int map[DIM][DIM], int *nr, int *nc)
     fclose(fin);
 }
 
+void expand_r(int map, int, int nr, int nc)
+{
+    /*the offsets*/
+
+
+
+    /*detect -1*/
+
+
+
+*/
+
+}
 
 /*questions to ask
 1)Would using memory allocation here be logical?
