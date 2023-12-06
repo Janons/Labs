@@ -88,3 +88,24 @@ void expand_r(int map[DIM][DIM], int nr, int nc, int regionnumber)
     }
 }
 
+void map_write(char *name, int map[DIM][DIM], int nr, int nc, int regionnumber)
+{
+    FILE *fout;
+    int i, j;
+
+    /*opening the output file*/
+    fout = fopen(name, "r");
+    if (fout == NULL)
+        perror("Error in parsing the file");
+
+    /*printing the file into fileout*/
+    for (i = 0; i < nr; i++)
+    {
+        for (j = 0; j < nc; j++)
+        {
+            if (map[i][j] == 0)
+            {
+                fprintf(fout, "*");
+            }
+        }
+    }
