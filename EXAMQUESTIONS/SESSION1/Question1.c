@@ -5,7 +5,6 @@ int *merge3(int *a, int *b, int *c, int na,
             int nb, int nc);
 int main()
 {
-    //*dynamic memory allocation part
 
     return 0;
 }
