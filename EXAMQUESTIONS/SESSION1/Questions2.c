@@ -41,8 +41,9 @@ int list_insert_in_order(list_t **headP, char *surname, char *name)
     node->surname = strdup(surname);
     node->name = strdup(name);
 
-    /*inorder insertion
-    We must go over the elements here*/
+   /*Write this part again*/
+
+    /*Normal Insertion*/
     tmp = head;
 
     while (tmp->next != NULL && strcmp(surname, tmp->surname) < 0)
