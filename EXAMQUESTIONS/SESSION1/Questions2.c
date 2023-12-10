@@ -21,19 +21,38 @@ int main()
     list_t *headP;
     int result;
 
-
     return 0;
 }
 
 int list_insert_in_order(list_t **headP, char *surname, char *name)
 {
     list_t *node, *head, *tmp;
-
-    node = new_element();
     head = *headP;
 
-    node -> surname = strdup(surname);
-    node -> name = strdup(name);
+    /*initial search*/
+    for (node = headP; node != NULL; node->next)
+    {
+        if (strcmp(surname, node->surname) == 0 || strcmp(surname, node->name) == 0)
+            return 0;
+    }
+
+    node = new_element();
+    /*memory allocation for the string elements*/
+    node->surname = strdup(surname);
+    node->name = strdup(name);
+
+    /*inorder insertion
+    We must go over the elements here*/
+    tmp = head;
+
+    while (tmp->next != NULL && strcmp(surname, tmp->surname) < 0)
+    {
+        tmp = tmp->next;
+    }
+    node->next = tmp->next;
+    tmp->next = node;
+
+    return 1;
 }
 
 list_t *new_element() // creating the new node
