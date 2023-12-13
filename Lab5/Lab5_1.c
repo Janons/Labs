@@ -20,12 +20,13 @@ int main(int argc, char *argv[])
     magicNumber = n * ((n * n) + 1) / 2;
 
     /*open the file*/
-    FILE *fin = fopen(argv[2], "r");
+    FILE *fin = fopen(argv[3], "r");
 
     /*dynamic memory allocation for the matrix*/
-    **matrix = (int **)malloc(n * sizeof(int *));
+    matrix = (int **)malloc(n * sizeof(int *));
     for (i = 0; i < n; i++)
     {
+        matrix[i] = (int *)malloc(n * sizeof(int));
         for (int j = 0; j < n; j++)
         {
             matrix[i][j] = count;
@@ -117,9 +118,6 @@ void matrixPerm(int **matrix, int *sol, int *mark,
     }
 
     return;
-
-    *mark = calloc(n * n, sizeof(int));
-    *sol = (int *)malloc(n * n * sizeof(int));
 
     for (i = 0; i < n * n; i++)
     {
