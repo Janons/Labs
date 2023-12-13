@@ -4,12 +4,25 @@
 /*prototypes*/
 
 void **matrixCreate(int **matrix, int *nr, int *nc, char *name);
-void my_memoryAllocation(int **matrix, int r);
+int *my_memoryAllocation(int size, int typesize);
 int recursion();
 
 int main()
 {
+    int **matrix;
+    
+
     return 0;
+}
+
+int *my_memoryAllocation(int size, int typesize)
+{
+    int *mem = malloc(size * sizeof(typesize));
+    if (mem == NULL)
+    {
+        exit(-1);
+    }
+    return mem;
 }
 
 void **matrixCreate(int **matrix, int *nr, int *nc, char *name)
@@ -28,6 +41,13 @@ void **matrixCreate(int **matrix, int *nr, int *nc, char *name)
 
     fscanf(fmaze, "%d %d", &r, &c);
     char line[c];
+
+    /*memory allocation for the matrix*/
+    matrix = (int **)my_memoryAllocation(r, sizeof(int *));
+    for (i = 0; i < r; i++)
+    {
+        matrix[i] = (int *)my_memoryAllocation(c, sizeof(int));
+    }
 
     /*matrix creation*/
     while (fgets(line, c, fmaze) == NULL)
