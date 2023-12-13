@@ -2,32 +2,48 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void matrixPerm(int **matrix, int *sol, int *mark,
+void matrixPerm(int **matrix, int *mark,
                 int n, int row, int collumn, int magicnumber, FILE *fin);
 bool checkMagicSquare(int **matrix, int n, int magicNumber);
 
 int main(int argc, char *argv[])
 {
     int magicNumber;
-    int **matrix, count = 1, i, j;
+    int i, j;
+    int n;
+    int **matrix, count = 1;
+    int *mark;
 
-    if (argc < 3)
+    if (argc != 3)
     {
-        return EXIT_SUCCESS;
+        return (EXIT_FAILURE);
     }
-    int n = atoi(argv[1]);
-    int *matrixArray;
+    // Important int variables
+
+    n = atoi(argv[1]);
     magicNumber = n * ((n * n) + 1) / 2;
 
-    /*open the file*/
+    /*file processses*/
     FILE *fin = fopen(argv[2], "w");
+    if (fin == NULL)
+    {
+        fprint(stderr, "Error in parsing the file");
+    }
 
     if (fin == NULL)
     {
         exit(EXIT_FAILURE);
     }
 
-    /*dynamic memory allocation for the matrix*/
+    /*dynamic memory allocation for the matrix and
+    mark*/
+    // mark
+    int mark = (int *)calloc(n * n, sizeof(int));
+    if (mark == NULL)
+    {
+        exit(-1);
+    }
+    // Matrix
     matrix = (int **)malloc(n * sizeof(int *));
     for (i = 0; i < n; i++)
     {
@@ -39,11 +55,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    int *mark = calloc(n * n, sizeof(int));
-    int *sol = (int *)malloc(n * n * sizeof(int));
-    int row=0, collumn=0;
+    int row = 0, collumn = 0;
 
-    matrixPerm(matrix, sol, mark, n,row ,collumn, magicNumber, fin);
+    matrixPerm(matrix, mark, n, row, collumn, magicNumber, fin);
     fclose(fin);
 
     for (i = 0; i < n; i++)
@@ -51,7 +65,6 @@ int main(int argc, char *argv[])
         free(matrix[i]);
     }
     free(matrix);
-    free(sol);
     return 0;
 }
 
@@ -106,7 +119,7 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
     return false;
 }
 
-void matrixPerm(int **matrix, int *sol, int *mark,
+void matrixPerm(int **matrix, int *mark,
                 int n, int row, int collumn, int magicnumber, FILE *fin)
 {
     int i, j;
@@ -135,13 +148,17 @@ void matrixPerm(int **matrix, int *sol, int *mark,
             mark[i] = 1;
             matrix[row][collumn] = i;
 
-            int nextcol = (collumn+1)%n;
-            int nextrow = row + (nextcol==0);
+            int nextcol = (collumn + 1) % n;
+            int nextrow = row + (nextcol == 0);
 
-             matrixPerm(matrix, sol, mark, n, nextrow, nextcol, magicnumber, fin);
+            matrixPerm(matrix, mark, n, nextrow, nextcol, magicnumber, fin);
 
-             mark[i]=0;
+            mark[i] = 0;
         }
     }
     return;
 }
+
+
+/*the coder was later on changed with Professors
+Solution*/
