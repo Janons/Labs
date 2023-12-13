@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void matrixPerm(int **matrix, int *matrixArray, int *val, int *sol, int *mark,
-                int n, int count, int pos, int magicnumber);
+void matrixPerm(int **matrix, int *sol, int *mark,
+                int n, int pos, int magicnumber, FILE *fin);
 bool checkMagicSquare(int **matrix, int n, int magicNumber);
-void writeMagicSquare();
-void freeThematrix();
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +19,9 @@ int main(int argc, char *argv[])
     int *matrixArray;
     magicNumber = n * ((n * n) + 1) / 2;
 
+    /*open the file*/
+    FILE *fin = fopen(argv[2], "r");
+
     /*dynamic memory allocation for the matrix*/
     **matrix = (int **)malloc(n * sizeof(int *));
     for (i = 0; i < n; i++)
@@ -32,15 +33,18 @@ int main(int argc, char *argv[])
         }
     }
 
-    /*matrix array*/
-    *matrixArray = (int *)malloc(n * n * sizeof(int));
+    int *mark = calloc(n * n, sizeof(int));
+    int *sol = (int *)malloc(n * n * sizeof(int));
+    int pos;
+
+    matrixPerm(matrix, sol, mark, n, pos, magicNumber, fin);
+    fclose(fin);
+
     for (i = 0; i < n; i++)
     {
-        for (j = 0; j < n; j++)
-        {
-            matrixArray[(n * i) + j] = matrix[i][j];
-        }
+        free(matrix[i]);
     }
+    free(matrix);
     return 0;
 }
 
@@ -93,27 +97,47 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
     return false;
 }
 
-void matrixPerm(int **matrix, int *matrixArray, int *val, int *sol, int *mark,
-                int n, int count, int pos, int magicnumber)
+void matrixPerm(int **matrix, int *sol, int *mark,
+                int n, int pos, int magicnumber, FILE *fin)
 {
-    int i;
+    int i, j;
 
     if (pos >= n * n)
-        return;
+    {
+        if (checkMagicSquare(matrix, n, magicnumber))
+        {
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    fprintf(fin, "%d", matrix[i][j]);
+                }
+            }
+        }
+    }
+
+    return;
 
     *mark = calloc(n * n, sizeof(int));
     *sol = (int *)malloc(n * n * sizeof(int));
 
     for (i = 0; i < n * n; i++)
     {
-        if (mark[i] == 0)
+        for (j = 0; j < n; j++)
         {
-            mark[i] = 1;
+            pos = (n * i) + j;
+            if (mark[i] == 0)
+            {
 
-            sol[pos] = matrixArray[i];
-            
+                mark[i] = 1;
+                sol[pos] = matrix[i][j];
+                matrixPerm(matrix, sol, mark, n, pos++, magicnumber, fin);
+                mark[i] = 0;
+            }
         }
     }
+    free(mark);
+    return;
 }
 
 /*To-Do
