@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 void matrixPerm(int **matrix, int *sol, int *mark,
-                int n, int pos, int magicnumber, FILE *fin);
+                int n, int row, int collumn, int magicnumber, FILE *fin);
 bool checkMagicSquare(int **matrix, int n, int magicNumber);
 
 int main(int argc, char *argv[])
@@ -15,12 +15,17 @@ int main(int argc, char *argv[])
     {
         return EXIT_SUCCESS;
     }
-    int n = atoi(argv[2]);
+    int n = atoi(argv[1]);
     int *matrixArray;
     magicNumber = n * ((n * n) + 1) / 2;
 
     /*open the file*/
-    FILE *fin = fopen(argv[3], "r");
+    FILE *fin = fopen(argv[2], "w");
+
+    if (fin == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
 
     /*dynamic memory allocation for the matrix*/
     matrix = (int **)malloc(n * sizeof(int *));
@@ -36,9 +41,9 @@ int main(int argc, char *argv[])
 
     int *mark = calloc(n * n, sizeof(int));
     int *sol = (int *)malloc(n * n * sizeof(int));
-    int pos;
+    int row=0, collumn=0;
 
-    matrixPerm(matrix, sol, mark, n, pos + 1, magicNumber, fin);
+    matrixPerm(matrix, sol, mark, n,row ,collumn, magicNumber, fin);
     fclose(fin);
 
     for (i = 0; i < n; i++)
@@ -50,6 +55,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+// checking for the square matrix
 // checking for the square matrix
 bool checkMagicSquare(int **matrix, int n, int magicNumber)
 {
@@ -63,7 +69,6 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
     count = 0;
     for (i = 0; i < n; i++)
     {
-
         for (j = 0; j < n; j++)
         {
             count += matrix[i][j];
@@ -80,16 +85,17 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
                 flag2 = 1;
             }
         }
-        // Check Diagonal
-        count = 0;
+    }
 
-        for (j = 0; j < n; j++)
-        {
-            if (j == i)
-            {
-                count += matrix[i][j];
-            }
-        }
+    // Check Diagonal
+    count = 0;
+    for (i = 0; i < n; i++)
+    {
+        count += matrix[i][i];
+    }
+    if (count == magicNumber)
+    {
+        flag3 = 1;
     }
 
     if (flag1 && flag2 && flag3)
@@ -101,11 +107,11 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
 }
 
 void matrixPerm(int **matrix, int *sol, int *mark,
-                int n, int pos, int magicnumber, FILE *fin)
+                int n, int row, int collumn, int magicnumber, FILE *fin)
 {
     int i, j;
 
-    if (pos >= n * n)
+    if (row == n)
     {
         if (checkMagicSquare(matrix, n, magicnumber))
         {
@@ -117,31 +123,26 @@ void matrixPerm(int **matrix, int *sol, int *mark,
                 }
                 fprintf(fin, "\n");
             }
+            fprintf(fin, "\n");
         }
+        return;
     }
 
-    return;
-
-    for (i = 0; i < n * n; i++)
+    for (i = 1; i < n * n; i++)
     {
-        for (j = 0; j < n; j++)
+        if (mark[i] == 0)
         {
-            pos = (n * i) + j;
-            if (mark[i] == 0)
-            {
+            mark[i] = 1;
+            matrix[row][collumn] = i;
 
-                mark[i] = 1;
-                sol[pos] = matrix[i][j];
-                matrixPerm(matrix, sol, mark, n, pos++, magicnumber, fin);
-                mark[i] = 0;
-            }
+            int nextcol = (collumn+1)%n;
+            int nextrow = row + (nextcol==0);
+
+             matrixPerm(matrix, sol, mark, n, nextrow, nextcol, magicnumber, fin);
+
+             mark[i]=0;
         }
     }
     free(mark);
     return;
 }
-
-/*To-Do
-1) Write the same code with calloc
-2)Write the same code with lesser lines
-3)Go over dynamic memory allocation once again,master the logic*/
