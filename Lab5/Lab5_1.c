@@ -119,7 +119,7 @@ void matrixPerm(int **matrix, int *sol, int *mark,
             {
                 for (j = 0; j < n; j++)
                 {
-                    fprintf(fin, "%d", matrix[i][j]);
+                    fprintf(fin, "%d ", matrix[i][j]);
                 }
                 fprintf(fin, "\n");
             }
@@ -143,6 +143,5 @@ void matrixPerm(int **matrix, int *sol, int *mark,
              mark[i]=0;
         }
     }
-    free(mark);
     return;
 }
