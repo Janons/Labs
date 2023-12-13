@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     {
         return EXIT_SUCCESS;
     }
-    int n = (int)argv[2];
+    int n = atoi(argv[2]);
     int *matrixArray;
     magicNumber = n * ((n * n) + 1) / 2;
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     int *sol = (int *)malloc(n * n * sizeof(int));
     int pos;
 
-    matrixPerm(matrix, sol, mark, n, pos, magicNumber, fin);
+    matrixPerm(matrix, sol, mark, n, pos + 1, magicNumber, fin);
     fclose(fin);
 
     for (i = 0; i < n; i++)
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
         free(matrix[i]);
     }
     free(matrix);
+    free(sol);
     return 0;
 }
 
@@ -56,10 +57,12 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
     int flag1, flag2, flag3, count = 0;
 
     // check rows
+    flag1 = 0;
+    flag2 = 0;
+    flag3 = 0;
+    count = 0;
     for (i = 0; i < n; i++)
     {
-        flag1 = 0;
-        count = 0;
 
         for (j = 0; j < n; j++)
         {
@@ -68,7 +71,6 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
             if (count == magicNumber)
                 flag1 = 1;
         }
-        flag2 = 0;
         count = 0;
         for (j = 0; j < n; j++)
         {
@@ -79,8 +81,8 @@ bool checkMagicSquare(int **matrix, int n, int magicNumber)
             }
         }
         // Check Diagonal
-        flag3 = 0;
         count = 0;
+
         for (j = 0; j < n; j++)
         {
             if (j == i)
@@ -113,6 +115,7 @@ void matrixPerm(int **matrix, int *sol, int *mark,
                 {
                     fprintf(fin, "%d", matrix[i][j]);
                 }
+                fprintf(fin, "\n");
             }
         }
     }
