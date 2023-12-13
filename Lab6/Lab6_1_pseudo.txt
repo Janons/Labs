@@ -1,0 +1,90 @@
+Pseudo Code
+
+Algorithms and Data Structures
+
+Lab6.1
+
+
+Problem
+A file includes a labyrinth with the following specifications:
+* the first line of the file specifies the number of row R and the number of columns C of a matrix
+* the following R lines specify the matrix rows (each one with C characters), where each
+    * '@' indicates the initial position of a human being
+    * ' ' represents corridors (empty cells)
+    * '*' represents walls (full cells)
+    * '#' represents exit points. Suppose that only one person is present in the maze in the initial configuration.
+
+
+GOAL
+Write three recursive functions to find:
+* one escape path
+* all escape paths
+* the shortest escape path from the maze.
+Print out the solution (or all solutions) on standard output.
+
+
+
+
+To -Do
+- [ ] Write a function for matrix creation
+- [ ] Dynamically Allocate Matrix
+- [ ] A function for Recursion
+- [ ] Main Function
+- [ ] Fill all empty spaces with 1’s (Matrix Creation Part)
+- [ ] Define the offsets for the human
+
+
+
+Matrix Creation Code
+
+void matrix(**matrix, r,c){
+
+ open the file
+
+
+while(fgets(line)!= NULL){
+    
+    for (value in the line )
+    {
+        if (value == '*')
+        {
+            make the value equal to 1
+        }
+    }
+    close the file
+}
+
+
+}
+
+
+
+
+Recursion Part
+
+Recursion(){
+If  (reaches(human)) = #(exit){
+
+      return ;
+}
+
+
+Recursion 
+
+For each of the values in the row of the matrix
+
+if (value == human)
+{
+    for each of the values in the collumn of the matrix
+    {
+        recurse on the surroundings
+    }
+       
+               
+}
+
+
+}
+
+
+
