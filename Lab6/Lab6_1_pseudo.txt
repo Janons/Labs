@@ -55,6 +55,10 @@ inside the maze and unblocked
 
 
 
+Data Structures to use
+
+1 Storing
+=> List
 
 Matrix Creation Code
 

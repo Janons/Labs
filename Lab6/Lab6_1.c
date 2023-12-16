@@ -2,17 +2,37 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/*definition*/
+#define EMPTY ' '
+#define START '@'
+#define STOP '#'
+#define PATH '$'
+
+const int xOff = {0, 1, 0, -1};
+const int yOff = {-1, 0, 1, 0};
+
 /*prototypes*/
 
 void **matrixCreate(int **matrix, int *nr, int *nc, char *name);
 int *my_memoryAllocation(int size, int typesize);
 bool isValid(int **matrix, int r, int c, int x, int y);
 
-void recursion(int **matrix, int x, int y);
+void recursion(int **matrix, int x, int y, int *path);
 
-int main()
+int main(int argc, char *argv)
 {
     int **matrix;
+    int nr, nc;
+
+    matrixCreate(matrix, nr, nc, argv[1]);
+
+    int *path;
+
+    path = (int *)malloc(nr * nc * sizeof(int));
+    if (path == NULL)
+    {
+        return EXIT_FAILURE;
+    }
 
     return 0;
 }
@@ -83,7 +103,7 @@ bool isValid(int **matrix, int r, int c, int x, int y)
 }
 
 /*finding a general solution*/
-void recursion(int **matrix, int x, int y);
+void recursion(int **matrix, int x, int y, int *path);
 {
 
     int xoffset = {0, 1, 0, -1};
@@ -92,6 +112,7 @@ void recursion(int **matrix, int x, int y);
 
     if (map[x][y] == "#")
     {
+
         return;
     }
 
@@ -103,6 +124,9 @@ void recursion(int **matrix, int x, int y);
     {
         xx = x + xoff[i];
         yy = y + yoff[i];
-        recursion(matrix, xx, yy);
+
+        if (isValid(xx, yy, matrix))
+        {
+        }
     }
 }
