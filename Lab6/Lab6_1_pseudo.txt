@@ -35,6 +35,27 @@ To -Do
 
 
 
+Step by step Approach
+
+(Finding a general solution)
+1 Write an isValid() to check if a cell at position is
+inside the maze and unblocked
+
+=> blocked = '.'
+=> unblocked = -1
+
+2 Mark the current cell as blocked
+
+3 Iterate through all possible directions
+-> Calculate next positions based on the current direction
+-If next position is valid => append the direction to the current path 
+-> Backtrack by removing the last direction from the current path
+
+4 Mark the current cell as unblocked before returning
+
+
+
+
 Matrix Creation Code
 
 void matrix(**matrix, r,c){
@@ -82,7 +103,7 @@ if (value == human)
     }
        
                
-               
+
 }
 
 

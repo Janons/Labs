@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /*prototypes*/
 
 void **matrixCreate(int **matrix, int *nr, int *nc, char *name);
 int *my_memoryAllocation(int size, int typesize);
+bool isValid(int **matrix, int r, int c, int x, int y);
+
 void recursion(int **matrix, int x, int y);
 
 int main()
@@ -66,6 +69,20 @@ void **matrixCreate(int **matrix, int *nr, int *nc, char *name)
     *nc = c;
 }
 
+bool isValid(int **matrix, int r, int c, int x, int y)
+{
+    /*row,col check*/
+
+    bool row = (x <= c && y <= c) ? true : false;
+    bool result = (matrix[x][y] != "*") ? true : false;
+
+    if (row && result)
+        return true;
+
+    return false;
+}
+
+/*finding a general solution*/
 void recursion(int **matrix, int x, int y);
 {
 
