@@ -26,8 +26,8 @@ Print out the solution (or all solutions) on standard output.
 
 
 To -Do
-- [ ] Write a function for matrix creation
-- [ ] Dynamically Allocate Matrix
+- [✅] Write a function for matrix creation
+- [ ✅] Dynamically Allocate Matrix
 - [ ] A function for Recursion
 - [ ] Main Function
 - [ ] Fill all empty spaces with 1’s (Matrix Creation Part)
@@ -77,9 +77,11 @@ if (value == human)
 {
     for each of the values in the collumn of the matrix
     {
-        recurse on the surroundings
+        recurse until you find an empty place
+        identify the empty places as dots
     }
        
+               
                
 }
 

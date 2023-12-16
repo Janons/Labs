@@ -5,19 +5,18 @@
 
 void **matrixCreate(int **matrix, int *nr, int *nc, char *name);
 int *my_memoryAllocation(int size, int typesize);
-int recursion();
+void recursion(int **matrix, int x, int y);
 
 int main()
 {
     int **matrix;
-    
 
     return 0;
 }
 
 int *my_memoryAllocation(int size, int typesize)
 {
-    int *mem = malloc(size * sizeof(typesize));
+    int mem = malloc(size * sizeof(typesize));
     if (mem == NULL)
     {
         exit(-1);
@@ -55,8 +54,8 @@ void **matrixCreate(int **matrix, int *nr, int *nc, char *name)
         j = 0;
         while (j < c && (line[j] == ' ' || line[j] == '*' || line[j] == '#'))
         {
-            if (matrix[i][j] == '*')
-                matrix[i][j] = 1;
+            if (matrix[i][j] == ' ')
+                matrix[i][j] = -1;
             j++;
         }
         i++;
@@ -65,4 +64,28 @@ void **matrixCreate(int **matrix, int *nr, int *nc, char *name)
 
     *nr = r;
     *nc = c;
+}
+
+void recursion(int **matrix, int x, int y);
+{
+
+    int xoffset = {0, 1, 0, -1};
+    int yoffset = {1, 0, -1, 0};
+    int xx, yy;
+
+    if (map[x][y] == "#")
+    {
+        return;
+    }
+
+    /*mark the position*/
+    map[x][y] = '.';
+
+    /*look for a path to escape*/
+    for (i = 0; i < 4; i++)
+    {
+        xx = x + xoff[i];
+        yy = y + yoff[i];
+        recursion(matrix, xx, yy);
+    }
 }
