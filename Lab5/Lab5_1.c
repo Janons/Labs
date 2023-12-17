@@ -3,8 +3,11 @@
 #include <stdbool.h>
 
 void matrixPerm(int **matrix, int *mark,
-                int n, int row, int collumn, int magicnumber, FILE *fin);
-bool checkMagicSquare(int **matrix, int n, int magicNumber);
+                int n, int level);
+
+void *util_MemoryAllocation(int size);
+int isValid();
+bool checkMagicSquare(int **matrix, int n, int *array);
 
 int main(int argc, char *argv[])
 {
@@ -28,11 +31,7 @@ int main(int argc, char *argv[])
     if (fin == NULL)
     {
         fprint(stderr, "Error in parsing the file");
-    }
-
-    if (fin == NULL)
-    {
-        exit(EXIT_FAILURE);
+        exit(-1);
     }
 
     /*dynamic memory allocation for the matrix and
@@ -54,10 +53,17 @@ int main(int argc, char *argv[])
             count++;
         }
     }
+    /*array*/
+    int *array = (int *)malloc(n * n * sizeof(int));
+    if (array == NULL)
+    {
+        fprintf(stdout, "The array pointer is null");
+        return -1;
+    }
 
     int row = 0, collumn = 0;
 
-    matrixPerm(matrix, mark, n, row, collumn, magicNumber, fin);
+    matrixPerm(matrix, mark, n, magicNumber);
     fclose(fin);
 
     for (i = 0; i < n; i++)
@@ -68,97 +74,47 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// checking for the square matrix
-// checking for the square matrix
-bool checkMagicSquare(int **matrix, int n, int magicNumber)
+// write this code again
+bool checkMagicSquare(int **matrix, int n, int *array)
 {
     int i, j;
-    int flag1, flag2, flag3, count = 0;
+    int count1, count2, count3;
 
-    // check rows
-    flag1 = 0;
-    flag2 = 0;
-    flag3 = 0;
-    count = 0;
     for (i = 0; i < n; i++)
     {
+        // row check
         for (j = 0; j < n; j++)
         {
-            count += matrix[i][j];
-
-            if (count == magicNumber)
-                flag1 = 1;
+            count1 += matrix[i][j];
         }
-        count = 0;
+
+        // collumn check
         for (j = 0; j < n; j++)
         {
-            count += matrix[j][i];
-            if (count == magicNumber)
+            count2 += matrix[j][i];
+        }
+
+        // diagonal check
+        for (j = 0; j < n; j++)
+        {
+            if (i == j)
             {
-                flag2 = 1;
+                count3 += matrix[i][j]
             }
         }
-    }
 
-    // Check Diagonal
-    count = 0;
-    for (i = 0; i < n; i++)
-    {
-        count += matrix[i][i];
-    }
-    if (count == magicNumber)
-    {
-        flag3 = 1;
-    }
+        if (count1 == count2 && count1 == count3 && count2 == count3)
+        {
+            return true;
+        }
 
-    if (flag1 && flag2 && flag3)
-    {
-        return true;
+        return false;
     }
-
-    return false;
 }
 
 void matrixPerm(int **matrix, int *mark,
-                int n, int row, int collumn, int magicnumber, FILE *fin)
+                int n, int level)
 {
-    int i, j;
-
-    if (row == n)
-    {
-        if (checkMagicSquare(matrix, n, magicnumber))
-        {
-            for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                {
-                    fprintf(fin, "%d ", matrix[i][j]);
-                }
-                fprintf(fin, "\n");
-            }
-            fprintf(fin, "\n");
-        }
-        return;
-    }
-
-    for (i = 1; i < n * n; i++)
-    {
-        if (mark[i] == 0)
-        {
-            mark[i] = 1;
-            matrix[row][collumn] = i;
-
-            int nextcol = (collumn + 1) % n;
-            int nextrow = row + (nextcol == 0);
-
-            matrixPerm(matrix, mark, n, nextrow, nextcol, magicnumber, fin);
-
-            mark[i] = 0;
-        }
-    }
-    return;
+    
 }
 
-
-/*the coder was later on changed with Professors
-Solution*/
