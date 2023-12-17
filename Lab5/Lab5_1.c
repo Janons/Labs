@@ -3,11 +3,11 @@
 #include <stdbool.h>
 
 void matrixPerm(int **matrix, int *mark,
-                int n, int level);
+                int dimension, int level, FILE *fout);
 
-void *util_MemoryAllocation(int size);
-int isValid();
-bool checkMagicSquare(int **matrix, int n, int *array);
+int *util_MemoryAllocation(int size);
+bool isValid(int **matrix, int dimension);
+bool checkMagicSquare(int **matrix, int dimension);
 
 int main(int argc, char *argv[])
 {
@@ -24,58 +24,60 @@ int main(int argc, char *argv[])
     // Important int variables
 
     n = atoi(argv[1]);
-    magicNumber = n * ((n * n) + 1) / 2;
 
     /*file processses*/
-    FILE *fin = fopen(argv[2], "w");
-    if (fin == NULL)
+    FILE *fout = fopen(argv[2], "w");
+    if (fout == NULL)
     {
-        fprint(stderr, "Error in parsing the file");
+        fprintf(stderr, "Error in parsing the file");
         exit(-1);
     }
 
     /*dynamic memory allocation for the matrix and
     mark*/
     // mark
-    int mark = (int *)calloc(n * n, sizeof(int));
+    mark = (int *)calloc(n * n, sizeof(int));
     if (mark == NULL)
     {
         exit(-1);
     }
     // Matrix
-    matrix = (int **)malloc(n * sizeof(int *));
+    matrix = (int **)util_MemoryAllocation(n * sizeof(int *));
     for (i = 0; i < n; i++)
     {
-        matrix[i] = (int *)malloc(n * sizeof(int));
-        for (int j = 0; j < n; j++)
-        {
-            matrix[i][j] = count;
-            count++;
-        }
-    }
-    /*array*/
-    int *array = (int *)malloc(n * n * sizeof(int));
-    if (array == NULL)
-    {
-        fprintf(stdout, "The array pointer is null");
-        return -1;
+        matrix[i] = (int *)util_MemoryAllocation(n * sizeof(int));
     }
 
-    int row = 0, collumn = 0;
+    /*calling the function*/
+    matrixPerm(matrix, mark, n, 0, fout);
+    fclose(fout);
 
-    matrixPerm(matrix, mark, n, magicNumber);
-    fclose(fin);
-
+    /*freeing the memory*/
     for (i = 0; i < n; i++)
     {
         free(matrix[i]);
     }
     free(matrix);
+    free(mark);
+
     return 0;
 }
 
+int *util_MemoryAllocation(int size)
+{
+    int *mat;
+
+    mat = malloc(size);
+    if (mat == NULL)
+    {
+        fprintf(stdout, "The memory is null");
+        exit(-1);
+    }
+
+    return mat;
+}
 // write this code again
-bool checkMagicSquare(int **matrix, int n, int *array)
+bool checkMagicSquare(int **matrix, int n)
 {
     int i, j;
     int count1, count2, count3;
@@ -99,7 +101,7 @@ bool checkMagicSquare(int **matrix, int n, int *array)
         {
             if (i == j)
             {
-                count3 += matrix[i][j]
+                count3 += matrix[i][j];
             }
         }
 
@@ -112,9 +114,102 @@ bool checkMagicSquare(int **matrix, int n, int *array)
     }
 }
 
-void matrixPerm(int **matrix, int *mark,
-                int n, int level)
+bool isValid(int **matrix, int dimension)
 {
-    
+    int sum = dimension * (dimension * (dimension + 1)) / 2;
+
+    // row test
+    for (int x = 0; x < dimension; x++)
+    {
+        int sol = 0;
+        int consider = 1;
+        for (int y = 0; y < dimension; y++)
+        {
+            sol += matrix[x][y];
+            if (matrix[x][y] == 0)
+                consider = 0;
+        }
+        if (consider)
+        {
+            if (sol != sum)
+            {
+                return false;
+            }
+            else
+            {
+                if (sol > sum)
+                    return false;
+            }
+        }
+    }
+
+    // col test
+    for (int x = 0; x < dimension; x++)
+    {
+        int sol = 0;
+        int consider = 1;
+        for (int y = 0; y < dimension; y++)
+        {
+            sol += matrix[y][x];
+            if (matrix[y][x] == 0)
+                consider = 0;
+        }
+        if (consider)
+        {
+            if (sol != sum)
+                return false;
+        }
+
+        else
+        {
+            if (sol > sum)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
+void matrixPerm(int **matrix, int *mark,
+                int dimension, int level, FILE *fout)
+{
+    int x, y;
+    int i, j;
+    /*base case*/
+    if (level >= dimension * dimension)
+    {
+        if (checkMagicSquare(matrix, dimension))
+        {
+            for (i = 0; i < dimension; i++)
+            {
+                for (j = 0; j < dimension; j++)
+                {
+                    fprintf(fout, "%d", matrix[i][j]);
+                }
+            }
+        }
+    }
+
+    x = level / dimension;
+    y = level % dimension;
+
+    for (i = 0; i < dimension * dimension; i++)
+    {
+        if (mark[i] == 0)
+        {
+            mark[i] = 1;
+
+            if (isValid(matrix, dimension))
+            {
+                matrix[i][j] = i;
+                matrixPerm(matrix, mark, dimension, level + 1, fout);
+            }
+
+            /*backtracking*/
+            mark[i] = 0;
+            matrix[i][j] = 0;
+        }
+    }
+}
