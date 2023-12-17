@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-void matrixPerm(int **matrix, int *mark, int dimension, int level, FILE *fout);
+void matrixPerm(int **matrix, int *mark, int dimension, int level);
 int *util_MemoryAllocation(int size);
 bool isValid(int **matrix, int dimension);
 bool checkMagicSquare(int **matrix, int dimension);
@@ -14,21 +14,13 @@ int main(int argc, char *argv[])
     int **matrix;
     int *mark;
 
-    if (argc != 3)
+    if (argc <= 2)
     {
         fprintf(stderr, "Usage: %s <dimension> <output_file>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
     n = atoi(argv[1]);
-
-    FILE *fout = fopen(argv[2], "w");
-    if (fout == NULL)
-    {
-        fprintf(stderr, "Error opening the output file");
-        exit(EXIT_FAILURE);
-    }
-
     mark = (int *)calloc(n * n, sizeof(int));
     if (mark == NULL)
     {
@@ -42,8 +34,8 @@ int main(int argc, char *argv[])
         matrix[i] = (int *)util_MemoryAllocation(n * sizeof(int));
     }
 
-    matrixPerm(matrix, mark, n, 0, fout);
-    fclose(fout);
+    matrixPerm(matrix, mark, n, 0);
+
 
     for (i = 0; i < n; i++)
     {
@@ -152,7 +144,7 @@ bool isValid(int **matrix, int dimension)
     return true;
 }
 
-void matrixPerm(int **matrix, int *mark, int dimension, int level, FILE *fout)
+void matrixPerm(int **matrix, int *mark, int dimension, int level)
 {
     int x, y;
     int i, j;
@@ -165,11 +157,10 @@ void matrixPerm(int **matrix, int *mark, int dimension, int level, FILE *fout)
             {
                 for (j = 0; j < dimension; j++)
                 {
-                    fprintf(fout, "%d ", matrix[i][j]);
+                    printf("%2d ", matrix[i][j]);
                 }
-                fprintf(fout, "\n");
+                printf("\n");
             }
-            fprintf(fout, "\n");
         }
         return;
     }
@@ -186,10 +177,10 @@ void matrixPerm(int **matrix, int *mark, int dimension, int level, FILE *fout)
 
             if (isValid(matrix, dimension))
             {
-                matrixPerm(matrix, mark, dimension, level + 1, fout);
+                matrixPerm(matrix, mark, dimension, level + 1);
             }
 
-            mark[i ] = 0;
+            mark[i] = 0;
             matrix[x][y] = 0;
         }
     }
