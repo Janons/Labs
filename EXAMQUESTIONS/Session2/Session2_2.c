@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "Session_2_2.h"
 
-/*structure*/
-
+int main()
+{
+}
