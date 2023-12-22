@@ -162,4 +162,5 @@ int move_recur(char **mazeCurr, int stepCurr, char **mazeBest, int stepBest,
 }
 
 /*Writing the professors solution once again on my own*/
-/*Key goal => Solve all recursion questions once again*/
+/*Key goal => Solve all recursion questions once again
+Solve this question again*/
