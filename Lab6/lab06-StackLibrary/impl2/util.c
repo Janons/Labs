@@ -88,3 +88,6 @@ void util_matrix_dispose(void ***ptr, unsigned int n, unsigned int m,
   }
   free(ptr);
 }
+
+
+//application of the codes
