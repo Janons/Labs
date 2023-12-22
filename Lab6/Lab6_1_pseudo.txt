@@ -52,3 +52,4 @@ IMPORTANT IDEAS
 1->For all contraints => We must define a base case
 2->We can directly start with => For loops for the recursion to go over the possible solution
 3->We reach to our starting point and then we start recursion from there and move on
+4-> Combining fscanf and fgets is not a wise idea
