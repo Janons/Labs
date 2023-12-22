@@ -63,9 +63,18 @@ int main(int argc, char *argv)
         exit(EXIT_FAILURE);
     }
 
-    step = move_recur(mazeCurr, 0, mazeBest, step, nr, nc, r, c);
+    step = move_recur(mazeCurr, 0, mazeBest, nr * nc, nr, nc, r, c);
 
     /*freeing part*/
+    for (r = 0; r < nr; r++)
+    {
+        free(mazeCurr[r]);
+        free(mazeBest[r]);
+    }
+    free(mazeCurr[r]);
+    free(mazeBest[r]);
+
+    return EXIT_SUCCESS;
 }
 
 void *util_malloc(int size)
