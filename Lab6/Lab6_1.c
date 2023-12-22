@@ -20,7 +20,7 @@ FILE *util_fopen(char *name, char *mode);
 void *util_malloc(int size);
 char *util_strdup(char *src);
 
-int main(int argc, char *argv)
+int main(int argc, char *argv[])
 {
     int r = -1, c = -1, i, j, nr, nc, step;
     int **mazeCurr, **mazeBest;
