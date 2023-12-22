@@ -22,12 +22,55 @@ char *util_strdup(char *src);
 
 int main(int argc, char *argv)
 {
-    int **matrix;
+    int r = -1, c = -1, i, j, nr, nc, step;
+    int **mazeCurr, **mazeBest;
+    char line[MAX]; // maximum number of characters for our maze;
+    FILE *fin;
+
+    if (argc < 2)
+    {
+        printf("Error: missing parameter.\n");
+        printf("Run as: %s <maze_file>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    fin = util_fopen(argv[1], "r");
+    fgets(line, MAX, fin);
+    sscanf(line, "%d %d", &nr, &nc);
+
+    mazeCurr = (char **)(util_malloc(nr * sizeof(char *)));
+    mazeBest = (char **)(util_malloc(nr * sizeof(char *)));
+
+    for (i = 0; i < nr; i++)
+    {
+        fgets(line, MAX, fin);
+        mazeCurr[i] = util_strdup(line);
+        mazeBest[i] = util_strdup(line);
+
+        for (j = 0; j < nc; j++)
+        {
+            if (mazeCurr[i][j] == START)
+            {
+                mazeCurr[i][j] = ' ';
+                r = i;
+                c = j;
+            }
+        }
+    }
+
+    if (r < 0 || c < 0)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    step = move_recur(mazeCurr, 0, mazeBest, step, nr, nc, r, c);
+
+    /*freeing part*/
 }
 
 void *util_malloc(int size)
 {
-    int *mem;
+    void *mem;
     mem = malloc(size);
 
     if (mem == NULL)
@@ -41,12 +84,14 @@ void *util_malloc(int size)
 
 char *util_strdup(char *src)
 {
-    src = strdup(src);
+    char *strr = strdup(src);
     if (src == NULL)
     {
         fprintf(stderr, "Error in memory allocation 2");
         exit(EXIT_FAILURE);
     }
+
+    return strr;
 }
 
 FILE *util_fopen(char *name, char *mode)
@@ -64,10 +109,48 @@ FILE *util_fopen(char *name, char *mode)
 int move_recur(char **mazeCurr, int stepCurr, char **mazeBest, int stepBest,
                int nr, int nc, int row, int col)
 {
+    int k, r, c;
+    // first check
+    if (stepCurr >= stepBest)
+    {
+        return stepBest;
+    }
 
+    // second check
+    if (mazeCurr[row][col] == STOP)
+    {
+        if (stepCurr < stepBest)
+        {
+            for (r = 0; r < row; r++)
+            {
+                for (c = 0; c < col; c++)
+                {
+                    mazeBest[r][c] = mazeCurr[r][c];
+                }
+            }
+        }
+        return stepBest;
+    }
+
+    // third base case
+    if (mazeCurr[r][c] != EMPTY)
+    {
+        return stepBest;
+    }
+
+    // Recursion
+    mazeCurr[r][c] = PATH;
+    for (k = 0; k < 4; k++)
+    {
+        r = row + xOff[k]; // we update the values for the r and c constantly here
+        c = col + yOff[k];
+
+        if (r <= nr && c <= nc && mazeCurr[r][c])
+        {
+            stepBest = move_recur(mazeCurr, stepCurr + 1, mazeBest, stepBest, nr, nc, r, c);
+        }
+    }
 }
 
-
-
-
 /*Writing the professors solution once again on my own*/
+/*Key goal => Solve all recursion questions once again*/

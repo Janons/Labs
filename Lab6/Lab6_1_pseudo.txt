@@ -4,16 +4,14 @@ Algorithms and Data Structures
 
 Lab6.1
 
-
 Problem
 A file includes a labyrinth with the following specifications:
 * the first line of the file specifies the number of row R and the number of columns C of a matrix
 * the following R lines specify the matrix rows (each one with C characters), where each
-    * '@' indicates the initial position of a human being
-    * ' ' represents corridors (empty cells)
-    * '*' represents walls (full cells)
-    * '#' represents exit points. Suppose that only one person is present in the maze in the initial configuration.
-
+* '@' indicates the initial position of a human being
+* ' ' represents corridors (empty cells)
+* '*' represents walls (full cells)
+* '#' represents exit points. Suppose that only one person is present in the maze in the initial configuration.
 
 GOAL
 Write three recursive functions to find:
@@ -22,96 +20,35 @@ Write three recursive functions to find:
 * the shortest escape path from the maze.
 Print out the solution (or all solutions) on standard output.
 
-
-
-
 To -Do
 - [✅] Write a function for matrix creation
 - [ ✅] Dynamically Allocate Matrix
 - [ ] A function for Recursion
 - [ ] Main Function
-- [ ] Fill all empty spaces with 1’s (Matrix Creation Part)
 - [ ] Define the offsets for the human
 
+Recursion
 
+GOAL
+1-> Generating the best path for escaping the maze
 
-Step by step Approach
+Contraints
+1-> If the current path is bigger than the best we found
+Return the best solution
 
-(Finding a general solution)
-1 Write an isValid() to check if a cell at position is
-inside the maze and unblocked
+2->If we reach => Exit
+Make the best sol =Current matrix
 
-=> blocked = '.'
-=> unblocked = -1
+3-> If we are at a border value
+Return stepbest (This action will acts as a way to excape wrong path recursion)
 
-2 Mark the current cell as blocked
+Values
+=> Route for the best path is what we return
 
-3 Iterate through all possible directions
--> Calculate next positions based on the current direction
--If next position is valid => append the direction to the current path 
--> Backtrack by removing the last direction from the current path
+How to create the path
+1-> While iterating over available places -> Mark them with path marker
 
-4 Mark the current cell as unblocked before returning
-
-
-
-Data Structures to use
-
-1 Storing
-=> List
-
-Matrix Creation Code
-
-void matrix(**matrix, r,c){
-
- open the file
-
-
-while(fgets(line)!= NULL){
-    
-    for (value in the line )
-    {
-        if (value == '*')
-        {
-            make the value equal to 1
-        }
-    }
-    close the file
-}
-
-
-}
-
-
-
-
-Recursion Part
-
-Recursion(){
-If  (reaches(human)) = #(exit){
-
-      return ;
-}
-
-
-Recursion 
-
-For each of the values in the row of the matrix
-
-if (value == human)
-{
-    for each of the values in the collumn of the matrix
-    {
-        recurse until you find an empty place
-        identify the empty places as dots
-    }
-       
-               
-
-}
-
-
-}
-
-
-
+IMPORTANT IDEAS
+1->For all contraints => We must define a base case
+2->We can directly start with => For loops for the recursion to go over the possible solution
+3->We reach to our starting point and then we start recursion from there and move on
