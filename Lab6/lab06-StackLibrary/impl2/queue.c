@@ -62,8 +62,18 @@ int queue_dequeue(queue_t *sp, void **data)
             old = sp->tail->next;
             sp->tail->next = old->tail->next;
             free(old);
+        }
+    }
+}
 
-
+void queue_dispode(queue_t *tail, void (*quit)(void *))
+{
+    node_t *node;
+    if (tail != NULL)
+    {
+        if (tail != NULL)
+        {
+            while()
         }
     }
 }

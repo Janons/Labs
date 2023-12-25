@@ -5,7 +5,7 @@
 #include "util.h"
 
 /* type declarations */
-typedef struct item *item_t;
+typedef struct item item_t;
 
 /* extern function prototypes */
 extern int item_read(FILE *fp, void **ptr);

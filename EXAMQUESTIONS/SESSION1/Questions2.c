@@ -1,69 +1,56 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
-#define MAXCHAR 20
+#define MAX 20
 
-typedef struct list_s list_t;
-struct list_s
+/*struct*/
+
+typedef struct list_s
 {
     char *name;
     char *surname;
-
     struct list_s *next;
-};
+} list_t;
 
-int list_insert_in_order(list_t **headP, char *surname, char *name);
-list_t *new_element();
+/*prototype*/
+int list_insert_in_oder(list_t **headp, char *name, char *surname);
 
 int main()
 {
-    list_t *headP;
-    int result;
-
     return 0;
 }
 
-int list_insert_in_order(list_t **headP, char *surname, char *name)
+int list_insert_in_oder(list_t **headp, char *name, char *surname)
 {
-    list_t *node, *head, *tmp;
-    head = *headP;
+    list_t *node, *head, *ptr;
 
     /*initial search*/
-    for (node = headP; node != NULL; node->next)
+
+    head = *headp;
+
+    for (node = head; node != NULL; node = node->next)
     {
-        if (strcmp(surname, node->surname) == 0 || strcmp(surname, node->name) == 0)
-            return 0;
+        if (strcmp(node->surname, surname) == 0 && strcmp(node->name, name) == 0)
+        {
+            return EXIT_FAILURE;
+        }
     }
 
-    node = new_element();
-    /*memory allocation for the string elements*/
-    node->surname = strdup(surname);
-    node->name = strdup(name);
-
-   /*Write this part again*/
-
-    /*Normal Insertion*/
-    tmp = head;
-
-    while (tmp->next != NULL && strcmp(surname, tmp->surname) < 0)
+    /*since the search didnt find a match, allocate memory for the node*/
+    node = (list_t *)malloc(sizeof(list_t));
+    if (node == NULL)
     {
-        tmp = tmp->next;
-    }
-    node->next = tmp->next;
-    tmp->next = node;
-
-    return 1;
-}
-
-list_t *new_element() // creating the new node
-{
-    list_t *e_ptr;
-    e_ptr = (list_t *)malloc(sizeof(list_t));
-    if (e_ptr == NULL)
-    {
-        exit(EXIT_FAILURE);
+        fprintf(stderr, "Error in allocating memory\n");
+        return EXIT_FAILURE;
     }
 
-    return (e_ptr);
+    /*head check*/
+    if (node->next = NULL || strcmp(surname, head->surname) < 0 || (strcmp(surname, head->surname) == 0 && strcmp(name, head->name) < 0))
+    {
+        node->next = head;
+        *headp = node;
+
+        return 1;
+    }
 }

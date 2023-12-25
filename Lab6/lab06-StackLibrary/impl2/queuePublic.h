@@ -12,7 +12,8 @@ typedef struct queue queue_t;
 /*extern function prototypes*/
 extern queue_t *queue_init(int size);
 extern int queue_enqueue(queue_t *sp, void *data);
-extern int queue_dequeue(queue_t *sp, void *data_ptr, int *status);
+extern int queue_dequeue(queue_t *sp, void *data_ptr);
 extern int queue_count(queue_t *sp);
+extern void queue_dispode(queue_t*tail, void(*quit)(void*));
 
 #endif

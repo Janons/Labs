@@ -50,6 +50,10 @@ int main(void)
       case 's':
         stop = 1;
         break;
+      
+      case 'q':
+      
+      
       default:
         fprintf(stderr, "Unknown command!\n");
     }

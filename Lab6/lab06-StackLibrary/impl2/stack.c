@@ -10,7 +10,7 @@ stack_t *stack_init(int size)
 {
   stack_t *sp;
 
-  sp = (stack_t *)util_malloc(sizeof(stack_t));
+  sp = (stack_t *)util_malloc(size *sizeof(stack_t));
   sp->head = NULL;
   sp->num = 0;
 
