@@ -4,7 +4,7 @@
 #define N 5
 
 /*prototype*/
-
+void arr(char *, char[], int[], int, int, int);
 
 int main(int argc, char *argv[])
 {
@@ -30,5 +30,24 @@ int main(int argc, char *argv[])
     if (sol == NULL)
     {
         exit(EXIT_FAILURE);
+    }
+}
+
+void arr(char *sol, char alfa[], int taken[], int position, int reps_allowed, int n_char)
+{
+    int i;
+
+    if (position == n_char)
+    {
+        return;
+    }
+
+    for (i = 0; i < N; i++)
+    {
+        if (!taken[i])
+        {
+            taken[i] = 1;
+            sol[position] = alfa[i];
+        }
     }
 }
