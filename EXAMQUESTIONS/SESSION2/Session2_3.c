@@ -38,36 +38,34 @@ int main(int argc, char *argv[])
     free(sol);
 }
 
-void arr(char *sol, char alfa[], int taken[], int position, int reps_allowed, int n_char)
+void arr(char *sol, char alfa[], int taken[], int pos, int reps_allowed, int n_char)
 {
-    int i;
 
-    if (position == n_char)
+    if (pos == n_char)
     {
-
-        for (i = 0; i < n_char; i++)
+        for (int i = 0; i < N; i++)
         {
-            fprintf(stdout, "%c", sol[i]);
+            fprintf(stdout, "%d", sol[i]);
         }
         fprintf(stdout, "\n");
-        return;
     }
 
-    for (i = 0; i < N; i++)
+    for (int i = 0; i < n_char; i++)
     {
-        if (!taken[i])
+        if (taken[i] = 0)
         {
             taken[i] = 1;
-            sol[position] = alfa[i];
-            arr(sol, alfa, taken, position + 1, reps_allowed, n_char);
+            sol[pos] = alfa[i];
+            arr(sol, alfa, taken, pos + 1, reps_allowed, n_char);
             taken[i] = 0;
         }
         else
         {
-            if (taken[i] && reps_allowed > 0)
+            if (taken[i] == 1 && reps_allowed > 0)
             {
-                sol[position] = alfa[i];
-                arr(sol, alfa, taken, position + 1, reps_allowed - 1, n_char);
+                sol[pos] = alfa[i];
+                arr(sol, alfa, taken, pos,
+                    reps_allowed, n_char);
             }
         }
     }
