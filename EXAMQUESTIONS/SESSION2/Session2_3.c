@@ -43,14 +43,14 @@ void arr(char *sol, char alfa[], int taken[], int pos, int reps_allowed, int n_c
 
     if (pos == n_char)
     {
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < n_char; i++)
         {
             fprintf(stdout, "%c", sol[i]);
         }
         fprintf(stdout, "\n");
     }
 
-    for (int i = 0; i < n_char; i++)
+    for (int i = 0; i < N; i++)
     {
         if (taken[i] == 0)
         {
