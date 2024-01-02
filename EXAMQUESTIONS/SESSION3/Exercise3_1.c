@@ -9,7 +9,7 @@ int search(int *v1, int *v2, int d1, int d2);
 int main()
 {
     int v1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int v2[4] = {3, 5, 6, 7};
+    int v2[4] = {4, 5, 6, 7};
     int index;
 
     index = search(&v1, &v2, sizeof(v1), sizeof(v2));
@@ -30,7 +30,7 @@ int search(int *v1, int *v2, int d1, int d2)
             index = i;
         }
 
-        if (flag)
+        if (flag==1)
         {
             while (j < d2)
             {
