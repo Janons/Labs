@@ -12,39 +12,36 @@ int main()
     int v2[4] = {4, 5, 6, 7};
     int index;
 
-    index = search(&v1, &v2, sizeof(v1), sizeof(v2));
+    index = search(v1, v2, sizeof(v1) / sizeof(v1[0]), sizeof(v2) / sizeof(v2[0]));
     printf("%d", index);
     return 0;
 }
 
 int search(int *v1, int *v2, int d1, int d2)
 {
-    int i = 0, j = 0, index;
+    int i = 0, j, index;
     int flag;
 
-    while (i < d1 - d2)
+    while (i <= d1 - d2)
     {
-        if (v1[i] == v2[0])
-        {
-            flag = 1;
-            index = i;
-        }
+        j = 0;
+        flag = 1;
 
-        if (flag==1)
+        while (j < d2 && flag == 1)
         {
-            while (j < d2)
+            /*internal check*/
+            if ((v1[i + j] != v2[j]))
             {
-
-                if ((v1[i + j] != v2[j]))
-                {
-                    flag = 0;
-                }
-                j++;
+                flag = 0;
             }
+            j++;
         }
-
+        if (flag == 1)
+        {
+            return i;
+        }
         i++;
     }
 
-    return (flag == 1) ? index : -1;
+    return -1;
 }
