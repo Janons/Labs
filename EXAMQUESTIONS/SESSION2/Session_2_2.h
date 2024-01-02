@@ -7,7 +7,7 @@
 typedef struct node_s
 {
     int col;
-    float f;
+    float value;
     struct node_s *next;
 } node_t;
 

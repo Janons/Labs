@@ -2,38 +2,49 @@
 #include <stdlib.h>
 
 /*prototype*/
-void menu_create(char **data[], int n);
-void menu_recursion(char **data[], int n, int pos, int *sol, int mark[], int num_courses);
+void menu_create(char ***data, int n);
+void menu_recursion(char ***data, int n, int l, int **sol);
 
-int main()
+int main(int argc, char *argv[])
 {
 }
 
-void menu_create(char **data[], int n)
+void menu_create(char ***data, int n)
 {
+    char **v;
+    v = (char **)malloc(n * sizeof(char));
+    if (v == NULL)
+    {
+        fprintf(stdout, "The malloc is null");
+        return;
+    }
+    menu_recursion(***data, n, 0, v);
 }
 
-void menu_recursion(char **data[], int n, int pos, int *sol, int mark[], int num_courses)
+void menu_recursion(char ***data, int n, int pos, int **sol)
 {
 
+    int i;
+
+    /*we are dealing with a matrix*/
     if (pos == n)
     {
-        for (int i = 0; i < num_courses; i++)
+        for (i = 0; i < n; i++)
         {
             fprintf(stdout, "%d", sol[i]);
         }
         fprintf(stdout, "\n");
+
+        return;
     }
 
     /*recursion part*/
-    for (int i = 0; i < n;l, i++)
+
+    while (data[pos][i] != NULL)
     {
-        if (mark[i] = 0)
-        {
-            mark[i] = 1;
-            sol[pos] = *data[i];
-            menu_recursion(data, n, pos + 1, sol, mark, num_courses);
-            mark[i] = 0;
-        }
+        sol[pos] = data[pos][i];
+        menu_recursion(data, n, pos + 1, sol);
+        i++;
     }
+    return;
 }
