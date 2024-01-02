@@ -12,12 +12,13 @@ typedef struct node
 /*prototypes*/
 node_t *createNode(node_t *right, node_t *left, int key);
 void list_insert(node_t **left, node_t **right, int key, int leftright);
+void list_write(node_t *left, node_t *right, int leftright);
 
 int main()
 {
     return 0;
 }
-
+/*write this code again*/
 void list_insert(node_t **left, node_t **right, int key, int leftright)
 {
     node_t *node, *left_, *right_;
@@ -65,4 +66,18 @@ node_t *createNode(node_t *right, node_t *left, int key)
     newNode->left = left;
     newNode->right = right;
     newNode->key = key;
+}
+
+void list_write(node_t *left, node_t *right, int leftright)
+{
+    node_t *node;
+
+    if (leftright == 1)
+    {
+        while (right != NULL)
+        {
+            right = right->right;
+            fprintf(stdout, "%d", right->key);
+        }
+    }
 }
