@@ -44,7 +44,11 @@ void list_insert(node_t **left, node_t **right, int key, int leftright)
             left_->left = node;
             node->right = left_;
             node->left = NULL;
-                }
+        }
+    }
+
+    else
+    {
     }
 }
 node_t *createNode(node_t *right, node_t *left, int key)
