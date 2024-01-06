@@ -2,58 +2,48 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*CORRECT IN FIRST TRY ✅*/
+/*struct*/
 
-/*tree structure*/
 typedef struct node
 {
-    int key;
-    char *name;
-    char *surname;
-    struct node *l, *r;
-} node_t;
+    char *str;
+    struct node *next;
 
-void pre_order(node_t *);
-void in_order(node_t *);
-void post_order(node_t *);
+} node_t;
+/*prototypes*/
+node_t *string_split(char *str);
+char *split_string(char *str);
+node_t *createNode();
 
 int main()
 {
     return 0;
 }
 
-/*pre_order solution*/
-
-void pre_order(node_t *root)
+node_t *string_split(char *str)
 {
+    node_t *newNode, *head;
+    newNode = createNode();
 
-    if (root == NULL)
+    if (head->next == NULL)
     {
-        return;
+ 
+    }
+}
+
+char *split_string(char *str)
+{
+}
+
+node_t *createNode()
+{
+    node_t *newNode;
+    newNode = (node_t *)malloc(sizeof(node_t));
+    if (newNode == NULL)
+    {
+        fprintf(stdout, "The memory couldn't be allocated");
+        return EXIT_FAILURE;
     }
 
-    printf("%d %s %s", root->key, root->name, root->surname);
-    pre_order(root->l);
-    pre_order(root->r);
-}
-
-/*In-Order Solution*/
-void in_order(node_t *root)
-{
-    if (root == NULL)
-        return;
-
-    pre_order(root->l);
-    printf("%d %s %s", root->key, root->name, root->surname);
-    pre_order(root->r);
-}
-
-void post_order(node_t *root)
-{
-    if (root == NULL)
-        return;
-
-    pre_order(root->l);
-    pre_order(root->r);
-    printf("%d %s %s", root->key, root->name, root->surname);
+    return newNode;
 }
