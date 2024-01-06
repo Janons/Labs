@@ -27,12 +27,23 @@ node_t *string_split(char *str)
 
     if (head->next == NULL)
     {
- 
+        
     }
 }
 
 char *split_string(char *str)
 {
+    int lenght = sizeof(str) % (sizeof(str[0]));
+    int i, j;
+
+    while (i < sizeof(str) - 1)
+    {
+        j = i + 1;
+        while (j < lenght && str[j] == str[i])
+        {
+            j++;
+        }
+    }
 }
 
 node_t *createNode()
