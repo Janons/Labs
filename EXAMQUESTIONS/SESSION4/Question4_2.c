@@ -22,34 +22,32 @@ int main()
 
 node_t *string_split(char *str)
 {
-    node_t *newNode, *head;
-    newNode = createNode();
+    node_t *newNode, *top;
 
-    if (head->next == NULL)
+    int starting_index, ending_index;
+
+    int lenghtOftheString = (sizeof(str) % sizeof(str[0]));
+    char *strHolder;
+
+    while (starting_index < lenghtOftheString || ending_index < lenghtOftheString)
     {
-        
-    }
-}
 
-char *split_string(char *str)
-{
-    int lenght = sizeof(str) % (sizeof(str[0]));
-    int i, j;
-
-    while (i < sizeof(str) - 1)
-    {
-        j = i + 1;
-        while (j < lenght && str[j] == str[i])
+        while (str[ending_index] != '.' && str[ending_index] == str[starting_index])
         {
-            j++;
+            ending_index++;
         }
+
+        strHolder = (char *)malloc((ending_index - starting_index) * sizeof(char));
+
+       
     }
 }
 
-node_t *createNode()
+/*creating the node part*/
+node_t *createNode(int size)
 {
     node_t *newNode;
-    newNode = (node_t *)malloc(sizeof(node_t));
+    newNode = (node_t *)malloc(size * sizeof(node_t));
     if (newNode == NULL)
     {
         fprintf(stdout, "The memory couldn't be allocated");
