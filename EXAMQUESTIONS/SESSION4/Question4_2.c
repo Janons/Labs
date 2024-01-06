@@ -43,16 +43,3 @@ node_t *string_split(char *str)
     }
 }
 
-/*creating the node part*/
-node_t *createNode(int size)
-{
-    node_t *newNode;
-    newNode = (node_t *)malloc(size * sizeof(node_t));
-    if (newNode == NULL)
-    {
-        fprintf(stdout, "The memory couldn't be allocated");
-        return EXIT_FAILURE;
-    }
-
-    return newNode;
-}
