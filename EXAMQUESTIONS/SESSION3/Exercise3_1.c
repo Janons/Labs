@@ -18,7 +18,7 @@ int main()
 }
 
 int search(int *v1, int *v2, int d1, int d2)
-{
+{ 
     int i = 0, j, index;
     int flag;
 
