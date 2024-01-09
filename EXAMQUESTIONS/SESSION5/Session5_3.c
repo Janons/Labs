@@ -7,7 +7,7 @@
 
 /*prototype*/
 int *file_to_array(FILE *fin, int n);
-void recursion();
+void recursion(int *mark, int *sol, int n, int pos);
 
 int main(int argc, char *argv)
 {
@@ -30,4 +30,10 @@ int *file_to_array(FILE *fin, int n)
     }
 
     return array;
+}
+
+void recursion(int *mark, int *sol, int n, int pos)
+{
+    if (pos >= n)
+        return;
 }
