@@ -42,7 +42,7 @@ void recursion(int *mark, int *sol, int n, int pos, FILE *fout)
         {
             fprintf(fout, "%c", sol[i]);
         }
-        fprintf("\n");
+        fprintf(fout, "\n");
     }
 
     i = 0;
