@@ -32,8 +32,33 @@ int *file_to_array(FILE *fin, int n)
     return array;
 }
 
-void recursion(int *mark, int *sol, int n, int pos)
+void recursion(int *mark, int *sol, int n, int pos, FILE *fout)
 {
+    int i, j;
+
     if (pos >= n)
-        return;
+    {
+        for (i = 0; i < n; i++)
+        {
+            fprintf(fout, "%c", sol[i]);
+        }
+        fprintf("\n");
+    }
+
+    i = 0;
+    while (i <= n)
+    {
+        while (array[i][j] != ' ')
+        {
+            if (mark[i] == 0)
+            {
+                mark[i] == 1;
+                sol[i] = array[i][j];
+                recursion(mark, sol, n, pos + 1, fout);
+                mark[i] = 0;
+            }
+            j++;
+        }
+        i++;
+    }
 }
