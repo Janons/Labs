@@ -8,8 +8,9 @@
 
 /*prototypes*/
 char ***createTheMatrix(int *rowPOinters, int *collumnPointers, char *name);
+char *memory_allocation(int size);
 char **matrix_merge(char ***matrix, int R, int C);
-void free3d(char ***matrix, char **array, int R, int C);
+FILE *open_file(char *name);
 
 /*main*/
 
@@ -22,95 +23,43 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-/*loading the string matrix*/
+/*creating the matrix version1*/
 char ***createTheMatrix(int *rowPOinters, int *collumnPointers, char *name)
 {
-    char word[MAXCHAR], ***matrix;
-    int r, c, i, j;
-
     FILE *fin;
+    char ***matrix;
+    int row, col;
 
-    /*open the file*/
-    fin = fopen(name, "r");
-    if (fin == NULL)
+    fin = open_file(name);
+    fscanf(fin, "%d %d", &row, &col);
+
+    matrix = (char ***)memory_allocation(row * col * sizeof(char **));
+    for (int i = 0; i < row; i++)
     {
-        perror("Error opening file");
-        exit(EXIT_FAILURE);
+        matrix[i] = (char **)memory_allocation(col * sizeof(char *));
     }
 
-    /*read the row and collumn of the file*/
-    fscanf(fin, "%d %d", &r, &c);
-    *rowPOinters = r;
-    *collumnPointers = c;
-
-    /*dynamic memory allocation for the values*/
-    matrix = (char ***)malloc(r * sizeof(char **));
-    if (matrix == NULL)
-    {
-        perror("The pointer is null");
-        exit(EXIT_FAILURE);
-    }
-    for (i = 0; i < r; i++)
-    {
-        matrix[i] = (char **)malloc(c * sizeof(char *));
-        if (matrix[i] == NULL)
-        {
-            perror("The pointer is null");
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    /*dynamicaaly alocating strings and parsing the file
-    content*/
-
-    for (i = 0; i < r; i++)
-    {
-        for (j = 0; j < c; j++)
-        {
-            fscanf(fin, "%s", word);
-
-            matrix[i][j] = strdup(word);
-        }
-    }
-
-    /*close the file*/
+    *rowPOinters = row;
+    *collumnPointers = col;
     fclose(fin);
-    *rowPOinters = r;
-    *collumnPointers = c;
-
-    return matrix;
 }
 
 char **matrix_merge(char ***matrix, int R, int C)
-
 {
-    int i, j;
+    int i, j, min_idx, *idx;
     char **array, *min_word;
-    int *aux;
 
-    /*allocating a final array + an auxliray one*/
-    array = (char **)malloc(R * C * sizeof(char *));
-    aux = (int *)calloc(R, sizeof(int));
+    /*memory allocation for the holder*/
+    array = (char **)memory_allocation(sizeof(char *));
 
-    /*merging the matrix in a sorted way*/
+    /*merging part*/
     i = 0;
-    while (i < sizeof(array))
-
+    while (i < R * C)
     {
-        int min_index = -1;
-        for (j = 0; j < R; j++)
-        {
-            if (aux[j] < C) /*comparing that rows dont have more than C values*/
-            {
-                if (min_index == -1 || strcmp(matrix[j][aux[j]], min_word) < 0)
-                {
-                    min_index = j;
-                    min_word = matrix[min_index][aux[min_index]];
-                }
-            }
-        }
+        min_idx = -1;
 
-        array[i] = matrix[j][aux[min_index]++];
-        i++;
+        /* for loop will be here*/
+        if (idx[j] < C)
+            return "aaaa";
     }
 }

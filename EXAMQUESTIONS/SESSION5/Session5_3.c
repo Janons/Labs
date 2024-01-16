@@ -7,7 +7,7 @@
 
 /*prototype*/
 int *file_to_array(FILE *fin, int n);
-void recursion(int *mark, int *sol, int n, int pos);
+void recursion(int *mark, char **array, int *sol, int n, int pos, FILE *fout);
 
 int main(int argc, char *argv)
 {
@@ -20,10 +20,10 @@ int main(int argc, char *argv)
 
 int *file_to_array(FILE *fin, int n)
 {
-    int *array, i = 0;
-    array = malloc(sizeof(int));
+    char **array, i = 0;
+    array = (char **)malloc(sizeof(char *));
 
-    while (fgets(array[i], MAX, fin) != EOF || i <= 3)
+    while (fgets(array[i], MAX, fin) != EOF || i <= n)
     {
         array[i] = malloc(MAX * sizeof(int));
         i++;
@@ -32,7 +32,7 @@ int *file_to_array(FILE *fin, int n)
     return array;
 }
 
-void recursion(int *mark, int *sol, int n, int pos, FILE *fout)
+void recursion(int *mark, char **array, int *sol, int n, int pos, FILE *fout)
 {
     int i, j;
 
@@ -54,7 +54,7 @@ void recursion(int *mark, int *sol, int n, int pos, FILE *fout)
             {
                 mark[i] == 1;
                 sol[i] = array[i][j];
-                recursion(mark, sol, n, pos + 1, fout);
+                recursion(mark,array, sol, n, pos + 1, fout);
                 mark[i] = 0;
             }
             j++;
