@@ -18,66 +18,48 @@ int main()
 {
     return 0;
 }
-/*write this code again*/
+
 void list_insert(node_t **left, node_t **right, int key, int leftright)
 {
-    node_t *node, *left_, *right_;
-    left_ = *left;
-    right_ = *right;
-
-    int val = (leftright == 1) ? 1 : 0;
-    node = createNode(right_, left_, key);
-
-    if (val)
+    node_t *node;
+    node = createNode(right, left, key);
+    if (leftright == 0)
     {
-        /*right extreme insertion*/
-        while (left_ != NULL)
+        while (node != NULL)
         {
-            left_ = left_->left;
-        }
-        if (left != NULL)
-        {
-            return EXIT_FAILURE;
+            node = node->left;
         }
 
-        else
-        {
-            left_->left = node;
-            node->right = left_;
-            node->left = NULL;
-        }
+        node->left = NULL;
+        node->right = left;
     }
-
-    else
-    {
-    }
-}
-node_t *createNode(node_t *right, node_t *left, int key)
-{
-    node_t *newNode;
-
-    newNode = (node_t *)malloc(sizeof(node_t));
-    if (newNode == NULL)
-    {
-        fprintf(stdout, "Problem in allocatig memory for newNode");
-        return EXIT_FAILURE;
-    }
-
-    newNode->left = left;
-    newNode->right = right;
-    newNode->key = key;
 }
 
 void list_write(node_t *left, node_t *right, int leftright)
 {
-    node_t *node;
-
-    if (leftright == 1)
+    node_t *p;
+    if (leftright == 0)
     {
-        while (right != NULL)
+        p = left;
+        while (p != NULL)
         {
-            right = right->right;
-            fprintf(stdout, "%d", right->key);
+            fprintf(stdout, "Values : %f", p->key);
+            p = p->right;
         }
     }
+}
+
+node_t *createNode(node_t *right, node_t *left, int key)
+{
+    node_t *node;
+
+    node = (node_t *)malloc(sizeof(node_t));
+    if (node == NULL)
+    {
+        return EXIT_FAILURE;
+    }
+
+    node->right = right;
+    node->left = left;
+    node->key = key;
 }
