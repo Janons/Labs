@@ -18,29 +18,35 @@ int main()
 }
 
 int search(int *v1, int *v2, int d1, int d2)
-{ 
-    int i = 0, j, index;
-    int flag;
+{
+    int i, j, flag, index;
 
-    while (i <= d1 - d2)
+    i = 0;
+    while (i < d1 - d2)
     {
-        j = 0;
-        flag = 1;
-
-        while (j < d2 && flag == 1)
+        if (v1[i] = v2[0])
         {
-            /*internal check*/
-            if ((v1[i + j] != v2[j]))
+            index = i;
+            for (j = 0; j < d2; j++)
             {
-                flag = 0;
+
+                if (v1[i + j] == v2[j])
+                {
+                    flag = 1;
+                }
+
+                else
+                {
+                    flag = 0;
+                }
             }
-            j++;
-        }
-        if (flag == 1)
-        {
-            return i;
         }
         i++;
+    }
+
+    if (flag == 1)
+    {
+        return index;
     }
 
     return -1;
