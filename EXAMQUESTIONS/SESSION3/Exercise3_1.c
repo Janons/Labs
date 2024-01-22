@@ -8,7 +8,7 @@ int search(int *v1, int *v2, int d1, int d2);
 
 int main()
 {
-    int v1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int v1[10] = {1, 2, 3, 5, 4, 5, 6, 7, 8, 9};
     int v2[4] = {4, 5, 6, 7};
     int index;
 
@@ -24,7 +24,7 @@ int search(int *v1, int *v2, int d1, int d2)
     i = 0;
     while (i < d1 - d2)
     {
-        if (v1[i] = v2[0])
+        if (v1[i] == v2[0])
         {
             index = i;
             for (j = 0; j < d2; j++)
