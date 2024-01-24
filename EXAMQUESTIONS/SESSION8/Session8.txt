@@ -1,0 +1,23 @@
+We have all our Pseudo Codes here
+
+
+Session8.1
+
+1 -> First go over the matrix rows-> get them inside your line
+2-> Go over the line
+    If you find zero while iterating over line
+         => Put the diagonal check in the function
+    
+    else -> Continue checking
+
+3-> After diagonal check, arrange the best
+
+
+Repeat the process
+
+
+
+
+
+Lessons From the professors solutions
+1-> By starting you search with -1 , you make the best search
