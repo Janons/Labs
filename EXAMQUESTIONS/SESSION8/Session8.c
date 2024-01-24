@@ -12,7 +12,8 @@ int main()
 
 void bishop_placer(int **matrix, int n) // assuming that its a square matrix
 {
-    int Best, r, c, sum, r_b, c_b;
+    int r, c, r_b, c_b;
+    int max, sum, rbest, cbest;
 
     for (r = 0; r < n; r++)
     {
@@ -35,8 +36,19 @@ void bishop_placer(int **matrix, int n) // assuming that its a square matrix
                     sum += matrix[r_b][c_b];
                 }
 
-                
+                // left-down search
+                for (r_b = r, c_b = c; r_b <= n, c_b >= 0; r_b++, c_b--)
+                {
+                    sum += matrix[r_b][c_b];
+                }
+
+                // left-right search
+                for (r_b = r, c_b = c; r_b <= n, c_b <= n; r_b++, c_b++)
+                {
+                    sum += matrix[r_b][c_b];
+                }
             }
         }
     }
+}
 }
