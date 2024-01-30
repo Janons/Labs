@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const int x_offset = {0, 1, 0, -1};
-const int y_offset = {-1, 0, 1, 0};
+const int x_offset = {-1, -1, -1, 0, 0, 1, 1, 1};
+const int y_offset = {-1, 0, 1, -1, 1, -1, 0, 1};
 
 int util_malloc(int size);
 int create_matrix(int **matrix); // opens the matrix
@@ -18,7 +18,7 @@ void recurBestsum(int **matrix, int matsize, int r, int c, int **marked, int *ma
                   int pathLenCurrent)
 
 {
-    int sumtracker, lentracker;
+    int sumtracker, lentracker, i;
     /*base cases*/
 
     if (r == (matsize - 1) && c == (matsize - 1))
@@ -35,10 +35,9 @@ void recurBestsum(int **matrix, int matsize, int r, int c, int **marked, int *ma
     lentracker = pathLenCurrent + 1;
 
     /*recursion*/
-    for ()
-
-
-
+    for (i = 0; i < 8; i++)
+    {
+    }
 
     /*backtrack*/
 }
