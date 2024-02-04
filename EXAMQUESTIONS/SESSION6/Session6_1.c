@@ -22,11 +22,9 @@ void sequence_invert(int *v1, int n, int *v2)
             for (j = 0; j < (k - i); j++)
             {
 
-                v2[i + j] = v1[k - i - j];
+                v2[i + j] = v1[k - i - 1];
             }
         }
         i = k;
     }
-    
-}
 }
