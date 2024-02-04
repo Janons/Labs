@@ -12,15 +12,21 @@ void sequence_invert(int *v1, int n, int *v2)
 {
     int i, j, k;
 
-    for (i = 0, j = 1; j < n; i++, j++)
-    {
-        if (v1[j] - v1[i] = 1)
-        {
-            for (k = 0; k < n - j || ; k++)
-            {
-                
+    // we track everything with k
 
+    for (i = 0, k = 1; k < n; k++)
+    {
+        /*checking end of the subsequence*/
+        if (v1[k] <= v1[k - 1])
+        {
+            for (j = 0; j < (k - i); j++)
+            {
+
+                v2[i + j] = v1[k - i - j];
             }
         }
+        i = k;
     }
+    
+}
 }
