@@ -28,6 +28,12 @@ void bishop_placer(int **matrix, int n) // assuming that its a square matrix
                 {
                     sum += matrix[r_b][c_b];
                 }
+
+                /*checking for lef_upper part of the matrix*/
+                 for (r_b = r, c_b = c; r_b < 0, c_b < 0; r_b--, c_b--)
+                {
+                    sum += matrix[r_b][c_b];
+                }
             }
         }
     }
