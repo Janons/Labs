@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*we use multiplication principle here*/
+
 /*definitions*/
 #define MAX 10
 
 /*prototype*/
-int *file_to_array(FILE *fin, int n);
+int **file_to_array(FILE *fin, int n);
 void recursion(int *mark, char **array, int *sol, int n, int pos, FILE *fout);
 
 int main(int argc, char *argv)
@@ -18,14 +20,22 @@ int main(int argc, char *argv)
     }
 }
 
-int *file_to_array(FILE *fin, int n)
+int **file_to_array(FILE *fin, int n)
 {
-    char **array, i = 0;
-    array = (char **)malloc(sizeof(char *));
+    char **array;
+    int i;
 
-    while (fgets(array[i], MAX, fin) != EOF || i <= n)
+    /*allocate memory for the*/
+    array = (char **)malloc(n * sizeof(char *));
+    if (array == NULL)
     {
-        array[i] = malloc(MAX * sizeof(int));
+        fprintf(stderr, "Memory couldn't be allocated for array");
+        exit(EXIT_FAILURE);
+    }
+
+    /*getting the value into the array*/
+    while (fscanf(fin, "%s", array[i]) != EOF)
+    {
         i++;
     }
 
@@ -34,31 +44,16 @@ int *file_to_array(FILE *fin, int n)
 
 void recursion(int *mark, char **array, int *sol, int n, int pos, FILE *fout)
 {
-    int i, j;
+    int i,j;
 
-    if (pos >= n)
-    {
-        for (i = 0; i < n; i++)
-        {
-            fprintf(fout, "%c", sol[i]);
-        }
-        fprintf(fout, "\n");
-    }
+    /*base case*/
+    if (pos == n)
+        return;
 
-    i = 0;
-    while (i <= n)
+    /*recursion part*/
+
+    for (i = 0; i < n; i++)
     {
-        while (array[i][j] != ' ')
-        {
-            if (mark[i] == 0)
-            {
-                mark[i] == 1;
-                sol[i] = array[i][j];
-                recursion(mark,array, sol, n, pos + 1, fout);
-                mark[i] = 0;
-            }
-            j++;
-        }
-        i++;
+     
     }
 }
